@@ -26,6 +26,9 @@
     </div>
 </nav>
 <div class="row-content">
+    <?php if ($data['inserted']): ?>
+        <p style="color:lawngreen">Ваша анкета успешко отправлена</p>
+    <? endif; ?>
     <?php if (!$data['is_ok'] && !empty($_POST)): ?>
         <p style="color:red">Неправильно заполнены поля!</p>
         <?php if ($data['bads']['first_name'] || $data['bads']['last_name']): ?>
@@ -66,7 +69,10 @@
                           class="form-control"><?= $_POST['birth_place'] ?></textarea>
                 <span style="color: red">*</span>
                 Гражданство: <select id="nation_select1" onclick="checkNation(1)" class="form-control" name="nation">
-                    <?php writeOptions($db, 'COUNTRIES') ?>
+                    <?php
+                    foreach ($data['countries'] as $country)
+                        echo '<option value="' . $country['COUNTRY_id'] . '">' . $country['NAME'] . '</option>';
+                    ?>
 
                 </select>
                 Гражданство(другое): <input id="nation1" class="form-control" name="nation_text"
@@ -102,7 +108,10 @@
             <div style="display: none" class="div" id="div3">
                 <h3>Адрес по паспорту</h3>
                 Страна: <select id="nation_select2" onclick="checkNation(2)" class="form-control" name="doc_nation">
-                    <?php writeOptions($db, 'COUNTRIES') ?>
+                    <?php
+                    foreach ($data['countries'] as $country)
+                        echo '<option value="' . $country['COUNTRY_id'] . '">' . $country['NAME'] . '</option>';
+                    ?>
 
                 </select>
                 Страна(другая): <input id="nation2" class="form-control" name="doc_nation_text"
@@ -116,7 +125,10 @@
                 Индекс: <input class="form-control" name="index" value="<?= $_POST['index'] ?>" type="text">
                 <h3>Фактический адрес</h3>
                 Страна: <select id="nation_select3" onclick="checkNation(3)" class="form-control" name="f_doc_nation">
-                    <?php writeOptions($db, 'COUNTRIES') ?>
+                    <?php
+                    foreach ($data['countries'] as $country)
+                        echo '<option value="' . $country['COUNTRY_id'] . '">' . $country['NAME'] . '</option>';
+                    ?>
 
                 </select>
                 Страна(другая): <input id="nation3" class="form-control" name="f_doc_nation_text"
@@ -142,7 +154,10 @@
                     ?>
                 </select>
                 Страна: <select id="nation_select4" onclick="checkNation(4)" class="form-control" name="edu_nation">
-                    <?php writeOptions($db, 'COUNTRIES') ?>
+                    <?php
+                    foreach ($data['countries'] as $country)
+                        echo '<option value="' . $country['COUNTRY_id'] . '">' . $country['NAME'] . '</option>';
+                    ?>
 
                 </select>
                 Страна(другая): <input id="nation4" class="form-control" name="edu_nation_text"
@@ -171,7 +186,10 @@
                     ?>
                 </select>
                 Язык: <select class="form-control" name="edu_lang">
-                    <?php writeOptions($db, 'FOREIGN_LANGUAGES') ?>
+                    <?php
+                    foreach ($data['languages'] as $language)
+                        echo '<option value="' . $language['LANGUAGE_id'] . '">' . $language['NAME'] . '</option>';
+                    ?>
                 </select>
             </div>
             <br><input class="btn btn-primary" type="submit" value="Отправить"> <a class="btn btn-danger"

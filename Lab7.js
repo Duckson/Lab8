@@ -20,6 +20,6 @@ function checkNation(num) {
     var nation = document.getElementById('nation' + num),
         select = document.getElementById('nation_select' + num);
     nation.removeAttribute('disabled');
-    if (select.value != 'Другое')
+    if (select.options[select.selectedIndex].innerHTML != 'Другое')
         nation.setAttribute('disabled', '');
 }
